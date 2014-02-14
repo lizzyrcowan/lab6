@@ -1,5 +1,4 @@
 'use strict';
-
 // Call this function when the page loads (the "ready" event)
 $(document).ready(function() {
 	initializePage();
@@ -10,8 +9,10 @@ $(document).ready(function() {
  */
 function initializePage() {
 	$('.project a').click(addProjectDetails);
-
 	$('#colorBtn').click(randomizeColors);
+//	$(".details")
+
+
 }
 
 /*
@@ -26,8 +27,26 @@ function addProjectDetails(e) {
 	// get rid of 'project' from the front of the id 'project3'
 	var idNumber = projectID.substr('project'.length);
 
+	var details = $(this).closest('.details');
+	
+	$.get("/project/"+ idNumber,callbackFn);
+
+
 	console.log("User clicked on project " + idNumber);
 }
+function callbackFn(result){
+	console.log(result);
+	var projHTML = '<img src="' + result.image + '" class ="detailsImage"></p>' + '<p>Title: ' + result.title + '</p>' + result.date + result.summary; // to get the title, image, and stuff
+	$("#project" + "#projectID" + " .details").html(projHTML); // to display it
+
+    //var projHTML = '<a href="#class" class="project">' +
+    //'<img src="' + result['image'] + '"class="detailsImage">' +
+     //'<p>' + result['title'] + '</p>' + '<p><small>' +
+     //result['date'] + '</small><p>' + '<p>' +
+     //result['summary'] + '</p></a>';
+	//$("#projectID .details").html(projHTML);
+
+ }
 
 /*
  * Make an AJAX call to retrieve a color palette for the site
